@@ -1,7 +1,7 @@
 FROM nginx:alpine
 
 RUN set -x \
-  && addgroup -S www-data \
-  && adduser -D -S -G www-data www-data
+  && addgroup -g 500 -S www-data \
+  && adduser -u 500 -D -S -G www-data www-data
 
 COPY config /etc/nginx

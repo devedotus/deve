@@ -16,7 +16,7 @@ services:
     image: nginx:alpine
     volumes:
       - www:/var/www
-      - ssl:/etc/letsencrypt
+    #  - ssl:/etc/letsencrypt
       - web:/etc/nginx
       - tmp:/tmp
     ports:

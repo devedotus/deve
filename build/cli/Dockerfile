@@ -9,6 +9,3 @@ RUN set -ex; \
 	chown -R www-data:www-data /var/www/cli;
   
 USER www-data
-
-RUN set -ex; \
-	wp package install /var/www/cli

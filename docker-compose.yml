@@ -84,9 +84,9 @@ services:
     image: wordpress:cli
     environment:
       WORDPRESS_DB_HOST: mysql:3306
-      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
-      WORDPRESS_DB_USER: ${MYSQL_USER}
-      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE:-db}
+      WORDPRESS_DB_USER: ${MYSQL_USER:-user}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD:-password}
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
       - www:/var/www

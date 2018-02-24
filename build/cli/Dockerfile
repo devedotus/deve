@@ -7,6 +7,6 @@ RUN apk add --no-cache git
 RUN set -ex; \
 	git clone https://bitbucket.org/deveus/cli.git /var/www/cli; \
 	chown -R www-data:www-data /var/www/cli; \
-	wp package install /var/www/cli
+	wp package install --allow-root /var/www/cli
   
 USER www-data

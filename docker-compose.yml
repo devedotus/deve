@@ -3,7 +3,7 @@ volumes:
   www:   # website data
   web:   # webserver configuration
   php:   # php-fpm pool configuration
-  ssl:   # ssl certificates
+  #ssl:   # ssl certificates
   tmp:   # tmp data like sockets
   dba:   # database data
 
@@ -25,19 +25,14 @@ services:
     restart: always
   php:
     build: build/php
-    image: wordpress:fpm-alpine
-    environment:
-      WORDPRESS_DB_HOST: dba:3306
-      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
-      WORDPRESS_DB_USER: ${MYSQL_USER}
-      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+    image: php:7.2-fpm-alpine
     volumes:
       - php:/usr/local/etc
       - www:/var/www
       - tmp:/tmp
     restart: always
   dba:
-    build: build/dba
+    #build: build/dba
     image: yobasystems/alpine-mariadb
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -47,45 +42,45 @@ services:
     volumes:
       - dba:/var/lib/mysql
     restart: always
-  backup:
-    build: build/backup
-    image: jsmitsnl/docker-restic:latest
-    volumes:
-      - www:/data/www
-      - web:/data/web
-      - php:/data/php
-      - ssl:/data/ssl
-    environment:
-      - RESTIC_CLEANUP_OPTIONS="--prune"
-      - RESTIC_BACKUP_OPTIONS="--exclude=/data/wp-content/cache/*"
-      - RESTIC_REPOSITORY=${RESTIC_REPOSITORY}
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-      - RESTIC_PASSWORD=${RESTIC_PASSWORD}
-    restart: always
+  #backup:
+  #  build: build/backup
+  #  image: jsmitsnl/docker-restic:latest
+  #  volumes:
+  #    - www:/data/www
+  #    - web:/data/web
+  #    - php:/data/php
+  #    - ssl:/data/ssl
+  #  environment:
+  #    - RESTIC_CLEANUP_OPTIONS="--prune"
+  #    - RESTIC_BACKUP_OPTIONS="--exclude=/data/wp-content/cache/*"
+  #    - RESTIC_REPOSITORY=${RESTIC_REPOSITORY}
+  #    - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+  #    - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+  #    - RESTIC_PASSWORD=${RESTIC_PASSWORD}
+  #  restart: always
 
   ############
   # Logger
   ############
-  log:
-    build: build/log
-    image: gliderlabs/logspout
-    volumes:
-      - '/var/run/docker.sock:/var/run/docker.sock'
-    command: "syslog+tls://${PAPERTRAIL_URL}"
-    restart: always
+  #log:
+  #  build: build/log
+  #  image: gliderlabs/logspout
+  #  volumes:
+  #    - '/var/run/docker.sock:/var/run/docker.sock'
+  #  command: "syslog+tls://${PAPERTRAIL_URL}"
+  #  restart: always
 
   #########
   # Tools
   #########
-  certbot:
-    build: build/certbot
-    image: xataz/letsencrypt
-    volumes:
-      - '/var/run/docker.sock:/var/run/docker.sock'
-      - ssl:/etc/letsencrypt
-  wp:
-    build: build/wp
+  #certbot:
+  #  build: build/certbot
+  #  image: xataz/letsencrypt
+  #  volumes:
+  #    - '/var/run/docker.sock:/var/run/docker.sock'
+  #    - ssl:/etc/letsencrypt
+  cli:
+    build: build/cli
     image: wordpress:cli
     environment:
       WORDPRESS_DB_HOST: mysql:3306

@@ -1,22 +1,30 @@
 version: '3'
 volumes:
-  www:   # website data
-  web:   # webserver configuration
-  php:   # php-fpm pool configuration
-  #ssl:   # ssl certificates
-  tmp:   # tmp data like sockets
-  dba:   # database data
+  www:
+    name: 'deve_www'
+  web:
+    name: 'deve_web'
+  php:
+    name: 'deve_php'
+  ssl:
+    name: 'deve_ssl'
+  tmp:
+    name: 'deve_tmp'
+  dba:
+    name: 'deve_dba'
 
 services:
   ############
   # SERVICES
   ############
   web:
+    container_name: 'deve_web'
     build: build/web
     image: nginx:alpine
+    user: www-data
     volumes:
       - www:/var/www
-    #  - ssl:/etc/letsencrypt
+      - ssl:/etc/letsencrypt
       - web:/etc/nginx
       - tmp:/tmp
     ports:
@@ -24,14 +32,17 @@ services:
       - '443:443'
     restart: always
   php:
+    container_name: 'deve_php'
     build: build/php
     image: php:fpm-alpine
+    user: www-data
     volumes:
       - php:/usr/local/etc
       - www:/var/www
       - tmp:/tmp
     restart: always
   dba:
+    container_name: 'deve_dba'
     #build: build/dba
     image: yobasystems/alpine-mariadb
     environment:
@@ -73,13 +84,8 @@ services:
   #########
   # Tools
   #########
-  #certbot:
-  #  build: build/certbot
-  #  image: xataz/letsencrypt
-  #  volumes:
-  #    - '/var/run/docker.sock:/var/run/docker.sock'
-  #    - ssl:/etc/letsencrypt
   cli:
+    container_name: 'deve_cli'
     build: build/cli
     image: wordpress:cli
     user: www-data

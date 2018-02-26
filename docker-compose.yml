@@ -1,4 +1,4 @@
-version: '3'
+version: '3.5'
 volumes:
   www:
     name: 'deve_www'
@@ -21,7 +21,6 @@ services:
     container_name: 'deve_web'
     build: build/web
     image: nginx:alpine
-    user: www-data
     volumes:
       - www:/var/www
       - ssl:/etc/letsencrypt
@@ -35,7 +34,6 @@ services:
     container_name: 'deve_php'
     build: build/php
     image: php:fpm-alpine
-    user: www-data
     volumes:
       - php:/usr/local/etc
       - www:/var/www
@@ -88,7 +86,6 @@ services:
     container_name: 'deve_cli'
     build: build/cli
     image: wordpress:cli
-    user: www-data
     environment:
       WORDPRESS_DB_HOST: mysql:3306
       WORDPRESS_DB_NAME: ${MYSQL_DATABASE:-db}
@@ -99,5 +96,6 @@ services:
       - www:/var/www
       - web:/etc/nginx
       - php:/usr/local/etc
-      - /home/tstachl/cli:/var/cli
+      - ssl:/etc/letsencrypt
+      - /home/tstachl/workspace/cli:/var/cli
   

@@ -39,13 +39,3 @@ RUN { \
 
 # copy default configuration
 COPY config /usr/local/etc
-
-# add the user and group we need to make the socket work
-RUN set -x \
-        && deluser www-data \
-        && addgroup -g 500 -S www-data \
-        && adduser -u 500 -D -S -G www-data www-data \
-        && chown -R www-data: /usr/local/etc \
-        && chown -R www-data: /var/www
-
-USER www-data

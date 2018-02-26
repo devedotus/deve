@@ -4,3 +4,6 @@
 [submodule "build/cli"]
 	path = build/cli
 	url = git@github.com:devedotus/docker-cli.git
+[submodule "build/php"]
+	path = build/php
+	url = git@github.com:devedotus/php.git

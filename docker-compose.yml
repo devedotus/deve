@@ -19,8 +19,7 @@ services:
   ############
   web:
     container_name: 'deve_web'
-    build: build/web
-    image: nginx:alpine
+    image: devedotus/web
     volumes:
       - www:/var/www
       - ssl:/etc/letsencrypt
@@ -32,8 +31,7 @@ services:
     restart: always
   php:
     container_name: 'deve_php'
-    build: build/php
-    image: php:fpm-alpine
+    image: devedotus/php
     volumes:
       - php:/usr/local/etc
       - www:/var/www
@@ -84,8 +82,7 @@ services:
   #########
   cli:
     container_name: 'deve_cli'
-    build: build/cli
-    image: wordpress:cli
+    image: devedotus/cli
     environment:
       WORDPRESS_DB_HOST: mysql:3306
       WORDPRESS_DB_NAME: ${MYSQL_DATABASE:-db}

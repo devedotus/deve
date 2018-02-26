@@ -7,3 +7,6 @@
 [submodule "build/php"]
 	path = build/php
 	url = git@github.com:devedotus/php.git
+[submodule "build/web"]
+	path = build/web
+	url = git@github.com:devedotus/web.git

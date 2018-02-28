@@ -8,8 +8,6 @@ volumes:
     name: 'deve_php'
   ssl:
     name: 'deve_ssl'
-  tmp:
-    name: 'deve_tmp'
   dba:
     name: 'deve_dba'
 
@@ -24,10 +22,9 @@ services:
       - www:/var/www
       - ssl:/etc/letsencrypt
       - web:/etc/nginx
-      - tmp:/tmp
     ports:
-      - '80:80'
-      - '443:443'
+      - '80:8080'
+      - '443:4433'
     restart: always
   php:
     container_name: 'deve_php'
@@ -35,7 +32,6 @@ services:
     volumes:
       - php:/usr/local/etc
       - www:/var/www
-      - tmp:/tmp
     restart: always
   dba:
     container_name: 'deve_dba'

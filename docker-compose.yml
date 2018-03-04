@@ -1,94 +1,41 @@
-version: '3.5'
+version: '3'
+
 volumes:
   www:
-    name: 'deve_www'
-  web:
-    name: 'deve_web'
-  php:
-    name: 'deve_php'
-  ssl:
-    name: 'deve_ssl'
-  dba:
-    name: 'deve_dba'
+  dbd:
 
 services:
-  ############
-  # SERVICES
-  ############
   web:
-    container_name: 'deve_web'
-    image: devedotus/web
-    volumes:
-      - www:/var/www
-      - ssl:/etc/letsencrypt
-      - web:/etc/nginx
+    build: build/nginx
+    image: devedotus/deve:web
     ports:
-      - '80:8080'
-      - '443:4433'
-    restart: always
+      - '8080:8080'
+      - '4433:4433'
+    volumes:
+      - www:/var/www/html
+    restart: unless-stopped
+
   php:
-    container_name: 'deve_php'
-    image: devedotus/php
+    build: build/php
+    image: devedotus/deve:php
+    depends_on:
+      - mysql
     volumes:
-      - php:/usr/local/etc
-      - www:/var/www
-    restart: always
-  dba:
-    container_name: 'deve_dba'
-    #build: build/dba
-    image: yobasystems/alpine-mariadb
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-password}
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-db}
-      MYSQL_USER: ${MYSQL_USER:-user}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-password}
-    volumes:
-      - dba:/var/lib/mysql
-    restart: always
-  #backup:
-  #  build: build/backup
-  #  image: jsmitsnl/docker-restic:latest
-  #  volumes:
-  #    - www:/data/www
-  #    - web:/data/web
-  #    - php:/data/php
-  #    - ssl:/data/ssl
-  #  environment:
-  #    - RESTIC_CLEANUP_OPTIONS="--prune"
-  #    - RESTIC_BACKUP_OPTIONS="--exclude=/data/wp-content/cache/*"
-  #    - RESTIC_REPOSITORY=${RESTIC_REPOSITORY}
-  #    - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-  #    - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-  #    - RESTIC_PASSWORD=${RESTIC_PASSWORD}
-  #  restart: always
-
-  ############
-  # Logger
-  ############
-  #log:
-  #  build: build/log
-  #  image: gliderlabs/logspout
-  #  volumes:
-  #    - '/var/run/docker.sock:/var/run/docker.sock'
-  #  command: "syslog+tls://${PAPERTRAIL_URL}"
-  #  restart: always
-
-  #########
-  # Tools
-  #########
-  cli:
-    container_name: 'deve_cli'
-    image: devedotus/cli
+      - www:/var/www/html
+    restart: unless-stopped
     environment:
       WORDPRESS_DB_HOST: mysql:3306
-      WORDPRESS_DB_NAME: ${MYSQL_DATABASE:-db}
-      WORDPRESS_DB_USER: ${MYSQL_USER:-user}
-      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD:-password}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME:-wordpress}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER:-wordpress}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD:-password}
+
+  mysql:
+    build: build/mysql
+    image: devedotus/deve:mysql
     volumes:
-      - '/var/run/docker.sock:/var/run/docker.sock'
-      - www:/var/www
-      - web:/etc/nginx
-      - php:/usr/local/etc
-      - ssl:/etc/letsencrypt
-      - /home/tstachl/workspace/cli:/var/cli
-  
+      - dbd:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-password}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-wordpress}
+      MYSQL_USER: ${MYSQL_USER:-wordpress}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-password}

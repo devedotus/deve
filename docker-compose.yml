@@ -1,4 +1,4 @@
-version: '3'
+version: '3.5'
 
 volumes:
   www:
@@ -12,7 +12,8 @@ services:
       - '8080:8080'
       - '4433:4433'
     volumes:
-      - www:/var/www/html
+      - www:/var/www/wordpress:ro
+      - ./config/wordpress.conf:/etc/nginx/default.conf:ro
     restart: unless-stopped
 
   php:
@@ -21,7 +22,7 @@ services:
     depends_on:
       - mysql
     volumes:
-      - www:/var/www/html
+      - www:/var/www/wordpress:rw
     restart: unless-stopped
     environment:
       WORDPRESS_DB_HOST: mysql:3306
@@ -33,7 +34,7 @@ services:
     build: build/mysql
     image: devedotus/deve:mysql
     volumes:
-      - dbd:/var/lib/mysql
+      - dbd:/var/lib/mysql:rw
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-password}
       MYSQL_DATABASE: ${MYSQL_DATABASE:-wordpress}

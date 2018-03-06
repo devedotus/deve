@@ -1,0 +1,83 @@
+map $http_host $blogid {
+  default       -999;
+  #Ref: http://wordpress.org/extend/plugins/nginx-helper/
+  #include /var/www/{{ domain }}/wp-content/uploads/nginx-helper/map.conf;
+}
+
+server {
+  listen 8080 default_server;
+  listen [::]:8080 default_server ipv6only=on;
+
+  server_name example.com;
+  root /var/www/wordpress;
+  index index.php;
+
+  include global/headers.conf;
+  include global/gzip.conf;
+  include global/cache/super-cache.conf;
+  include global/restrictions.conf;
+
+  # Specific for type of WordPress Installation
+  include global/wordpress-ms-subdomain.conf;
+
+  resolver 127.0.0.11 ipv6=off valid=60s;
+  set $upstream php:9000;
+
+  location ~ \.php$ {
+    try_files $uri =404;
+
+    include fastcgi_params;
+
+    fastcgi_read_timeout 360s;
+    fastcgi_buffer_size 128k;
+    fastcgi_buffers 4 256k;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+
+    fastcgi_pass $upstream;
+
+    fastcgi_index index.php;
+    fastcgi_intercept_errors on;
+  }
+}
+
+server {
+  listen 4433 default_server ssl http2;
+  listen [::]:4433 default_server ssl http2 ipv6only=on;
+
+  server_name example.com;
+  root /var/www/wordpress;
+  index index.php;
+
+  # ssl on;
+  # ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;
+  # ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
+  # ssl_trusted_certificate /etc/letsencrypt/live/example.com/fullchain.pem;
+  # include global/ssl.conf;
+
+  include global/headers.conf;
+  include global/gzip.conf;
+  include global/cache/super-cache.conf;
+  include global/restrictions.conf;
+
+  # Specific for type of WordPress Installation
+  include global/wordpress-ms-subdomain.conf;
+
+  resolver 127.0.0.11 ipv6=off valid=60s;
+  set $upstream php:9000;
+
+  location ~ \.php$ {
+    try_files $uri =404;
+
+    include fastcgi_params;
+
+    fastcgi_read_timeout 360s;
+    fastcgi_buffer_size 128k;
+    fastcgi_buffers 4 256k;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+
+    fastcgi_pass $upstream;
+
+    fastcgi_index index.php;
+    fastcgi_intercept_errors on;
+  }
+}

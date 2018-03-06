@@ -12,7 +12,7 @@ services:
       - '8080:8080'
       - '4433:4433'
     volumes:
-      - www:/var/www/wordpress:ro
+      - www:/var/www/html:ro
       - ./config/wordpress.conf:/etc/nginx/default.conf:ro
     restart: unless-stopped
 
@@ -22,7 +22,7 @@ services:
     depends_on:
       - mysql
     volumes:
-      - www:/var/www/wordpress:rw
+      - www:/var/www/html:rw
     restart: unless-stopped
     environment:
       WORDPRESS_DB_HOST: mysql:3306

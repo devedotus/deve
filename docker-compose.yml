@@ -12,8 +12,7 @@ services:
       - '8080:8080'
       - '4433:4433'
     volumes:
-      - www:/var/www/html:ro
-      - ./config/wordpress.conf:/etc/nginx/default.conf:ro
+      - www:/var/www:ro
     restart: unless-stopped
 
   php:
@@ -22,13 +21,8 @@ services:
     depends_on:
       - mysql
     volumes:
-      - www:/var/www/html:rw
+      - www:/var/www:rw
     restart: unless-stopped
-    environment:
-      WORDPRESS_DB_HOST: mysql:3306
-      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME:-wordpress}
-      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER:-wordpress}
-      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD:-password}
 
   mysql:
     build: build/mysql
@@ -36,7 +30,20 @@ services:
     volumes:
       - dbd:/var/lib/mysql:rw
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-password}
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-wordpress}
-      MYSQL_USER: ${MYSQL_USER:-wordpress}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-password}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+
+  wp:
+    build: build/wp
+    depends_on:
+      - mysql
+    volumes:
+      - www:/var/www:rw
+    restart: "no"
+    environment:
+      DEVE_DOMAIN: ${DEVE_DOMAIN}
+      DEVE_DATABASE: ${DEVE_DATABASE}
+      DEVE_USER: ${DEVE_USER}
+      DEVE_PASSWORD: ${DEVE_PASSWORD}
+      DEVE_EMAIL: ${DEVE_EMAIL}
+      DEVE_TITLE: ${DEVE_TITLE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}

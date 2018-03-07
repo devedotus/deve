@@ -5,12 +5,9 @@ echo "docker-entrypoint.sh"
 
 # if we don't have the default let's set it up
 if [ ! -d "/var/www/$DEVE_DOMAIN" ]; then
-    echo "before sleep"
     while ! mysqladmin ping -h"mysql" --silent; do
-        echo "sleep"
         sleep 1
     done
-    echo "done sleeping"
 
     PASSWDDB=$(openssl rand -base64 24)
     mysql -h"mysql" -uroot -p${MYSQL_ROOT_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS ${DEVE_DATABASE} /*\!40100 DEFAULT CHARACTER SET utf8 */;"

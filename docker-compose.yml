@@ -3,6 +3,8 @@ version: '3.5'
 volumes:
   www:
   dbd:
+  web:
+  php:
 
 services:
   web:
@@ -12,7 +14,8 @@ services:
       - '8080:8080'
       - '4433:4433'
     volumes:
-      - www:/var/www:ro
+      - web:/etx/nginx
+      - www:/var/www
     restart: unless-stopped
 
   php:
@@ -21,27 +24,28 @@ services:
     depends_on:
       - mysql
     volumes:
-      - www:/var/www:rw
+      - www:/var/www
     restart: unless-stopped
 
   mysql:
     build: build/mysql
     image: devedotus/deve:mysql
     volumes:
-      - dbd:/var/lib/mysql:rw
+      - dbd:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
 
   wp:
     build: build/wp
-    depends_on:
-      - mysql
     volumes:
-      - www:/var/www:rw
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - ../cli:/var/cli
+      - www:/var/www
     restart: "no"
     environment:
       DEVE_DOMAIN: ${DEVE_DOMAIN}
       DEVE_DATABASE: ${DEVE_DATABASE}
+      DEVE_DATABASE_PASSWORD: ${DEVE_DATABASE_PASSWORD}
       DEVE_USER: ${DEVE_USER}
       DEVE_PASSWORD: ${DEVE_PASSWORD}
       DEVE_EMAIL: ${DEVE_EMAIL}

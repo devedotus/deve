@@ -15,6 +15,7 @@ services:
       - '4433:4433'
     volumes:
       - web:/etx/nginx
+      - web:/etc/nginx
       - www:/var/www
     restart: unless-stopped
 
@@ -41,7 +42,13 @@ services:
       - '/var/run/docker.sock:/var/run/docker.sock'
       - ../cli:/var/cli
       - www:/var/www
+      - web:/etc/nginx
+    depends_on:
+      - web
+      - php
+      - mysql
     restart: "no"
+    command: "--help"
     environment:
       DEVE_DOMAIN: ${DEVE_DOMAIN}
       DEVE_DATABASE: ${DEVE_DATABASE}

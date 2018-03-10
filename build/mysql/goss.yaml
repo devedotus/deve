@@ -1,7 +1,3 @@
-service:
-  mysql:
-    enabled: true
-    running: true
 process:
   mysqld:
     running: true

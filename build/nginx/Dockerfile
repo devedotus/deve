@@ -10,7 +10,22 @@ RUN set -ex; \
     adduser -u 82 -D -S www-data www-data && \
     chown www-data:www-data /var/www && \
     chown www-data:www-data /etc/nginx/sites-available && \
-    chown www-data:www-data /etc/nginx/sites-enabled
+    chown www-data:www-data /etc/nginx/sites-enabled && \
+    mkdir -p /etc/ssl/private && \
+    mkdir -p /etc/ssl/certs && \
+    \
+    openssl req -x509 -nodes -days 365 -newkey rsa:4096 \
+        -keyout /etc/ssl/private/localhost.key \
+        -out /etc/ssl/certs/localhost.crt <<EOF
+US
+CA
+Private
+
+Localhost
+Development
+localhost
+
+EOF
 
 VOLUME /var/www /etc/nginx
 

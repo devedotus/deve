@@ -1,0 +1,14 @@
+sudo: required
+dist: trusty
+
+services:
+- docker
+
+env:
+- TEST=nginx
+
+before_install:
+- curl -L https://goss.rocks/install | sudo sh
+
+script:
+- cd build/$TEST && make

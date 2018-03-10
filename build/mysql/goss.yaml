@@ -1,0 +1,18 @@
+process:
+  mysqld:
+    running: true
+user:
+  mysql:
+    exists: true
+    uid: 100
+    gid: 101
+    groups:
+    - mysql
+    home: /var/lib/mysql
+    shell: /sbin/nologin
+mount:
+  /var/lib/mysql:
+    exists: true
+    opts:
+    - rw
+    - relatime

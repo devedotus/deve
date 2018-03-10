@@ -1,0 +1,53 @@
+process:
+  nginx:
+    running: true
+file:
+  /etc/nginx/default.conf:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+  /etc/nginx/nginx.conf:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+port:
+  tcp:443:
+    listening: true
+    ip:
+    - 0.0.0.0
+  tcp:80:
+    listening: true
+    ip:
+    - 0.0.0.0
+group:
+  www-data:
+    exists: true
+    gid: 82
+user:
+  www-data:
+    exists: true
+    uid: 82
+    gid: 82
+    groups:
+    - www-data
+    home: /var/www
+    shell: /bin/false
+mount:
+  /etc/nginx:
+    exists: true
+    opts:
+    - rw
+    - relatime
+  /var/www:
+    exists: true
+    opts:
+    - rw
+    - relatime
+# http:
+#   http://localhost:
+#     status: 200
+#     timeout: 5000
+#     body:
+#     - "web : deve.us"

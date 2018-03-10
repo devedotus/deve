@@ -25,4 +25,4 @@ RUN set -ex; \
 
 VOLUME /var/www /etc/nginx
 
-EXPOSE 8080 4433
+EXPOSE 80 443

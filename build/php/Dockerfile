@@ -6,7 +6,7 @@ RUN set -ex; \
 	apk add --no-cache --virtual .build-deps \
 		libjpeg-turbo-dev \
 		libpng-dev \
-		libbz2-dev \
+		bzip2-dev \
 	; \
 	\
 	docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \

@@ -7,6 +7,7 @@ RUN set -ex; \
 		libjpeg-turbo-dev \
 		libpng-dev \
 		bzip2-dev \
+		icu-dev \
 	; \
 	\
 	docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \

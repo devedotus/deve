@@ -1,15 +1,6 @@
-service:
-  mysql:
-    enabled: true
-    running: true
 process:
   mysqld:
     running: true
-port:
-  tcp:3306:
-    listening: true
-    ip:
-    - 127.0.0.1
 user:
   mysql:
     exists: true

@@ -1,0 +1,9 @@
+service:
+  mysql:
+    enabled: true
+    running: true
+port:
+  tcp:3306:
+    listening: true
+    ip:
+    - 127.0.0.1

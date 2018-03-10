@@ -10,7 +10,6 @@ file:
   /etc/nginx/nginx.conf:
     exists: true
     mode: "0644"
-    size: 969
     owner: root
     group: root
 port:
@@ -41,15 +40,11 @@ mount:
     opts:
     - rw
     - relatime
-    source: /dev/sdb
-    filesystem: xfs
   /var/www:
     exists: true
     opts:
     - rw
     - relatime
-    source: /dev/sdb
-    filesystem: xfs
 # http:
 #   http://localhost:
 #     status: 200

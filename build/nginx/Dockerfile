@@ -14,6 +14,8 @@ RUN set -ex; \
     chown www-data:www-data /var/www && \
     chown www-data:www-data /etc/nginx/sites-available && \
     chown www-data:www-data /etc/nginx/sites-enabled && \
+    chmod 0644 /etc/nginx/nginx.conf && \
+    chmod 0644 /etc/nginx/default.conf && \
     mkdir -p /etc/ssl/private && \
     mkdir -p /etc/ssl/certs && \
     \

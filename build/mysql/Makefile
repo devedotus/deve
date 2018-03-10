@@ -19,4 +19,4 @@ build:
 	docker build --force-rm -t $(DOCKER_IMAGE) .
 
 test:
-	dgoss run $(DOCKER_IMAGE)
+	dgoss run -e MYSQL_ROOT_PASSWORD=testPass $(DOCKER_IMAGE)

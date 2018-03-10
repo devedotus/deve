@@ -50,9 +50,9 @@ mount:
     - relatime
     source: /dev/sdb
     filesystem: xfs
-http:
-  http://localhost:
-    status: 200
-    timeout: 5000
-    body:
-    - "web : deve.us"
+# http:
+#   http://localhost:
+#     status: 200
+#     timeout: 5000
+#     body:
+#     - "web : deve.us"

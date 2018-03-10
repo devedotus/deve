@@ -30,10 +30,6 @@ command:
   # Test the standard extensions are enabled
   php -m | grep -i apcu:
     exit-status: 0
-  php -m | grep -i bcmath:
-    exit-status: 0
-  php -m | grep -i bz2:
-    exit-status: 0
   php -m | grep -i calendar:
     exit-status: 0
   php -m | grep -i ctype:
@@ -78,8 +74,6 @@ command:
     exit-status: 0
   php -m | grep -i openssl:
     exit-status: 0
-  php -m | grep -i pcntl:
-    exit-status: 0
   php -m | grep -i pdo:
     exit-status: 0
   php -m | grep -i pdo_mysql:
@@ -100,8 +94,6 @@ command:
     exit-status: 0
   php -m | grep -i sysvsem:
     exit-status: 0
-  php -m | grep -i sysvshm:
-    exit-status: 0
   php -m | grep -i tokenizer:
     exit-status: 0
   php -m | grep -i xml:
@@ -117,12 +109,6 @@ command:
 
   # Test that extra extensions are disabled by default
   php -m | grep newrelic:
-    exit-status: 1
-    stderr: ['!/./']
-  php -m | grep pdo_pgsql:
-    exit-status: 1
-    stderr: ['!/./']
-  php -m | grep pgsql:
     exit-status: 1
     stderr: ['!/./']
   php -m | grep redis:
@@ -141,13 +127,6 @@ command:
   # 3. list the newly loaded php mods (-m)
   # 4. grep the output of the loaded mods for the one under test
   php -n -d extension=yaml.so -m | grep yaml:
-    exit-status: 0
-    stderr: ['!/./']
-  php -n -d extension=pgsql.so -m | grep pgsql:
-    exit-status: 0
-    stderr: ['!/./']
-  # Note: pdo_pgsql requires pdo to also be present in order to be loaded properly
-  php -n -d extension=pdo.so -d extension=pdo_pgsql.so -m | grep pdo_pgsql:
     exit-status: 0
     stderr: ['!/./']
   # On some variants, session is not loaded as part of the core, and must be loaded at this time

@@ -20,7 +20,7 @@ RUN set -ex; \
     openssl req -x509 -nodes -days 365 -newkey rsa:4096 \
         -keyout /etc/ssl/private/localhost.key \
         -out /etc/ssl/certs/localhost.crt \
-        -subj "/C=US/ST=CA/L=Private/O=Localhost/OU=Development/CN=localhost" \
+        -subj "/C=US/ST=CA/L=Private/O=Localhost/OU=Development/CN=localhost" && \
     \
 	apk del .build-deps
 

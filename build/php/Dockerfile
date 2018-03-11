@@ -24,11 +24,11 @@ RUN set -ex; \
 	    mkdir -p /usr/src/php/ext/igbinary && \
 	    tar -C /usr/src/php/ext/igbinary -zxvf /tmp/igbinary.tar.gz --strip 1; \
     \
-    curl -L -o /tmp/msgpack.tar.gz "https://github.com/msgpack/msgpack-php/archive/msgpack-2.0.2" && \
+    curl -L -o /tmp/msgpack.tar.gz "https://github.com/msgpack/msgpack-php/archive/msgpack-2.0.2.tar.gz" && \
 	    mkdir -p /usr/src/php/ext/msgpack && \
 	    tar -C /usr/src/php/ext/msgpack -zxvf /tmp/msgpack.tar.gz --strip 1; \
     \
-    curl -L -o /tmp/apcu.tar.gz "https://github.com/krakjoe/apcu/archive/v5.1.11" && \
+    curl -L -o /tmp/apcu.tar.gz "https://github.com/krakjoe/apcu/archive/v5.1.11.tar.gz" && \
 	    mkdir -p /usr/src/php/ext/apcu && \
 	    tar -C /usr/src/php/ext/apcu -zxvf /tmp/apcu.tar.gz --strip 1; \
     \

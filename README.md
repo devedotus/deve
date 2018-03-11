@@ -2,6 +2,22 @@
 
 A simple, secure and performant way of developing and self-hosting Wordpress.org sites.
 
+[![Build Status](https://img.shields.io/travis/devedotus/deve.svg)](https://travis-ci.org/devedotus/deve)
+[![Docker Pulls](https://img.shields.io/docker/pulls/devedotus/deve.svg)](https://hub.docker.com/r/devedotus/deve/)
+[![GitHub watchers](https://img.shields.io/github/watchers/devedotus/deve.svg?style=social&logo=github&label=Watch)](https://github.com/devedotus/deve/watchers)
+
+[![version php](https://images.microbadger.com/badges/version/devedotus/deve:php.svg)](https://hub.docker.com/r/devedotus/deve/tags/)
+[![deve:php layers](https://images.microbadger.com/badges/image/devedotus/deve:php.svg)](https://hub.docker.com/r/devedotus/deve/tags/)
+
+[![version mysql](https://images.microbadger.com/badges/version/devedotus/deve:mysql.svg)](https://hub.docker.com/r/devedotus/deve/tags/)
+[![deve:mysql layers](https://images.microbadger.com/badges/image/devedotus/deve:mysql.svg)](https://hub.docker.com/r/devedotus/deve/tags/)
+
+[![version nginx](https://images.microbadger.com/badges/version/devedotus/deve:nginx.svg)](https://hub.docker.com/r/devedotus/deve/tags/)
+[![deve:nginx layers](https://images.microbadger.com/badges/image/devedotus/deve:nginx.svg)](https://hub.docker.com/r/devedotus/deve/tags/)
+
+[![version cli](https://images.microbadger.com/badges/version/devedotus/deve:cli.svg)](https://hub.docker.com/r/devedotus/deve/tags/)
+[![deve:cli layers](https://images.microbadger.com/badges/image/devedotus/deve:cli.svg)](https://hub.docker.com/r/devedotus/deve/tags/)
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.

@@ -32,9 +32,13 @@ RUN set -ex; \
 	    mkdir -p /usr/src/php/ext/apcu && \
 	    tar -C /usr/src/php/ext/apcu -zxvf /tmp/apcu.tar.gz --strip 1; \
     \
+    curl -L -o /tmp/newrelic.tar.gz "https://download.newrelic.com/php_agent/release/newrelic-php5-7.7.0.203-linux.tar.gz" && \
+	    mkdir -p /usr/src/php/ext/newrelic && \
+	    tar -C /usr/src/php/ext/newrelic -zxvf /tmp/newrelic.tar.gz --strip 1; \
+    \
 	docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
 	docker-php-ext-configure memcached; \
-	docker-php-ext-install bcmath bz2 calendar gd mysqli opcache zip sockets \
+	docker-php-ext-install bcmath bz2 calendar gd mysqli opcache zip sockets newrelic \
 	    intl shmop sysvmsg memcached sysvsem redis igbinary exif msgpack apcu; \
 	\
 	runDeps="$( \
@@ -49,7 +53,8 @@ RUN set -ex; \
 	    rm /tmp/redis.tar.gz && \
 	    rm /tmp/igbinary.tar.gz && \
 	    rm /tmp/msgpack.tar.gz && \
-	    rm /tmp/apcu.tar.gz
+	    rm /tmp/apcu.tar.gz && \
+	    rm /tmp/newrelic.tar.gz
 
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php

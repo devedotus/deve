@@ -9,7 +9,6 @@ user:
     gid: 82
     groups:
     - www-data
-    home: /var/www
     shell: /bin/false
 command:
   # Only confirm that these commands exit cleanly, with no error output.
@@ -129,9 +128,6 @@ command:
     # On session-default installs, re-loading session causes a warning, ignore
     stderr: ['!/./']
 
-
-
-
   # IMPORTANT: confirm the major/minor version of PHP itself
   php -r 'echo PHP_MAJOR_VERSION;':
     exit-status: 0
@@ -170,7 +166,7 @@ file:
       - '/^request_terminate_timeout = \${PHP_FPM_MAX_EXECUTION_TIME}/'
       - '/^rlimit_files = 40000/'
       - '/^rlimit_core = unlimited/'
-  /usr/local/etc/mods-available/newrelic.ini:
+  /usr/local/etc/php/conf.d/docker-php-ext-newrelic.ini:
     exists: true
     contains:
       - '/^;extension =/'

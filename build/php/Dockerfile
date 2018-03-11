@@ -10,7 +10,6 @@ RUN set -ex; \
 		icu-dev \
 		libmemcached-dev \
 		cyrus-sasl-dev \
-		yaml-dev \
 	; \
 	\
 	curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/php7.tar.gz" && \
@@ -24,7 +23,7 @@ RUN set -ex; \
 	docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
 	docker-php-ext-configure memcached; \
 	docker-php-ext-install bcmath bz2 calendar gd mysqli opcache zip sockets \
-	    intl shmop sysvmsg memcached yaml sysvsem redis; \
+	    intl shmop sysvmsg memcached sysvsem redis; \
 	\
 	runDeps="$( \
 		scanelf --needed --nobanner --format '%n#p' --recursive /usr/local/lib/php/extensions \

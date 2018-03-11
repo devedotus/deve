@@ -1,9 +1,9 @@
 file:
   /usr/local/bin/docker-entrypoint.sh:
     exists: true
-    mode: "0644"
-    owner: www-data
-    group: www-data
+    mode: "0755"
+    owner: root
+    group: root
 group:
   www-data:
     exists: true
@@ -15,7 +15,6 @@ user:
     gid: 82
     groups:
     - www-data
-    home: /var/www
     shell: /bin/false
 mount:
   /etc/nginx:

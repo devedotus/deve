@@ -37,7 +37,7 @@ RUN set -ex; \
 	    tar -C /usr/src/php/ext/newrelic -zxvf /tmp/newrelic.tar.gz --strip 1; \
     \
 	docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
-	docker-php-ext-configure memcached; \
+	docker-php-ext-configure memcached newrelic; \
 	docker-php-ext-install bcmath bz2 calendar gd mysqli opcache zip sockets newrelic \
 	    intl shmop sysvmsg memcached sysvsem redis igbinary exif msgpack apcu; \
 	\

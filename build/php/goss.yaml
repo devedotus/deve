@@ -114,9 +114,6 @@ command:
   php -m | grep redis:
     exit-status: 1
     stderr: ['!/./']
-  php -m | grep yaml:
-    exit-status: 1
-    stderr: ['!/./']
   php -m | grep xdebug:
     exit-status: 1
     stderr: ['!/./']
@@ -126,9 +123,6 @@ command:
   # 2. pass ini key-value (-d), enable the single extension to test
   # 3. list the newly loaded php mods (-m)
   # 4. grep the output of the loaded mods for the one under test
-  php -n -d extension=yaml.so -m | grep yaml:
-    exit-status: 0
-    stderr: ['!/./']
   # On some variants, session is not loaded as part of the core, and must be loaded at this time
   php -n -d extension=redis.so -m | grep redis:
     exit-status: 0

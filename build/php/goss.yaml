@@ -101,12 +101,24 @@ command:
     exit-status: 0
   php -m | grep -i zlib:
     exit-status: 0
+  php -m | grep -i redis:
+    exit-status: 0
 
   # Test that extra extensions are disabled by default
-  php -m | grep redis:
-    exit-status: 0
   php -m | grep xdebug:
     exit-status: 0
+    stderr: ['!/./']
+  # To test and validate by-default disabled extensions [without side effects]
+  # Hack:
+  # 1. run php with no ini file (-n)
+  # 2. pass ini key-value (-d), enable the single extension to test
+  # 3. list the newly loaded php mods (-m)
+  # 4. grep the output of the loaded mods for the one under test
+  # On some variants, session is not loaded as part of the core, and must be loaded at this time
+  php -n -d extension=xdebug.so -m | grep xdebug:
+    exit-status: 0
+    # On session-default installs, re-loading session causes a warning, ignore
+    stderr: ['!/./']
 
   # IMPORTANT: confirm the major/minor version of PHP itself
   php -r 'echo PHP_MAJOR_VERSION;':

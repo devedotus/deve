@@ -7,6 +7,7 @@ services:
 env:
 - TEST=nginx
 - TEST=mysql
+- TEST=php
 
 before_install:
 - curl -L https://goss.rocks/install | sudo sh

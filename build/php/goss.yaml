@@ -1,0 +1,122 @@
+group:
+  www-data:
+    exists: true
+    gid: 82
+user:
+  www-data:
+    exists: true
+    uid: 82
+    gid: 82
+    groups:
+    - www-data
+    shell: /bin/false
+command:
+  # Only confirm that these commands exit cleanly, with no error output.
+  # Version constraints have been pushed down to the variant-level test, since they are different
+  php -m:
+    exit-status: 0
+    stderr: ['!/./']
+  php -v:
+    exit-status: 0
+    stderr: ['!/./']
+  php-fpm -m:
+    exit-status: 0
+    stderr: ['!/./']
+  php-fpm -v:
+    exit-status: 0
+    stderr: ['!/./']
+
+  # Test the standard extensions are enabled
+  php -m | grep -i apcu:
+    exit-status: 0
+  php -m | grep -i calendar:
+    exit-status: 0
+  php -m | grep -i ctype:
+    exit-status: 0
+  php -m | grep -i curl:
+    exit-status: 0
+  php -m | grep -i date:
+    exit-status: 0
+  php -m | grep -i dom:
+    exit-status: 0
+  php -m | grep -i exif:
+    exit-status: 0
+  # NOTE: extensions only activates running through FPM mode
+  php-fpm -m | grep -i cgi-fcgi:
+    exit-status: 0
+  php -m | grep -i gd:
+    exit-status: 0
+  php -m | grep -i iconv:
+    exit-status: 0
+  php -m | grep -i igbinary:
+    exit-status: 0
+  php -m | grep -i intl:
+    exit-status: 0
+  php -m | grep -i json:
+    exit-status: 0
+  php -m | grep -i mbstring:
+    exit-status: 0
+  # Not common to all variants, test in supported children
+  php -m | grep -i memcache:
+    exit-status: 0
+  php -m | grep -i memcached:
+    exit-status: 0
+  php -m | grep -i msgpack:
+    exit-status: 0
+  php -m | grep -i mysqli:
+    exit-status: 0
+  php -m | grep -i mysqlnd:
+    exit-status: 0
+  php -m | grep -i opcache:
+    exit-status: 0
+  php -m | grep -i openssl:
+    exit-status: 0
+  php -m | grep -i pdo:
+    exit-status: 0
+  php -m | grep -i phar:
+    exit-status: 0
+  php -m | grep -i posix:
+    exit-status: 0
+  php -m | grep -i readline:
+    exit-status: 0
+  php -m | grep -i shmop:
+    exit-status: 0
+  php -m | grep -i simplexml:
+    exit-status: 0
+  php -m | grep -i sockets:
+    exit-status: 0
+  php -m | grep -i sysvmsg:
+    exit-status: 0
+  php -m | grep -i sysvsem:
+    exit-status: 0
+  php -m | grep -i tokenizer:
+    exit-status: 0
+  php -m | grep -i xml:
+    exit-status: 0
+  php -m | grep -i xmlreader:
+    exit-status: 0
+  php -m | grep -i xmlwriter:
+    exit-status: 0
+  php -m | grep -i zip:
+    exit-status: 0
+  php -m | grep -i zlib:
+    exit-status: 0
+  php -m | grep -i redis:
+    exit-status: 0
+
+  # IMPORTANT: confirm the major/minor version of PHP itself
+  php -r 'echo PHP_MAJOR_VERSION;':
+    exit-status: 0
+    stdout: [7]
+    stderr: ['!/./']
+  php -r 'echo PHP_MINOR_VERSION;':
+    exit-status: 0
+    stdout: [2]
+    stderr: ['!/./']
+  php-fpm -m:
+    exit-status: 0
+    stderr: ['!/./']
+  php-fpm -v:
+    exit-status: 0
+    stdout: [PHP 7.2]
+    stderr: ['!/./']

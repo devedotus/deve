@@ -8,6 +8,7 @@ env:
 - TEST=nginx
 - TEST=mysql
 - TEST=php
+- TEST=wp
 
 before_install:
 - curl -L https://goss.rocks/install | sudo sh

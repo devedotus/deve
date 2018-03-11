@@ -10,15 +10,21 @@ RUN set -ex; \
 		icu-dev \
 		libmemcached-dev \
 		cyrus-sasl-dev \
+		yaml-dev \
 	; \
 	\
 	curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/php7.tar.gz" && \
 	    mkdir -p /usr/src/php/ext/memcached && \
 	    tar -C /usr/src/php/ext/memcached -zxvf /tmp/memcached.tar.gz --strip 1; \
 	\
+	curl -L -o /tmp/redis.tar.gz "https://github.com/phpredis/phpredis/archive/2.2.7.tar.gz" && \
+	    mkdir -p /usr/src/php/ext/redis && \
+	    tar -C /usr/src/php/ext/redis -zxvf /tmp/redis.tar.gz --strip 1; \
+    \
 	docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
 	docker-php-ext-configure memcached; \
-	docker-php-ext-install bcmath bz2 calendar gd mysqli opcache zip sockets intl sysvmsg memcached; \
+	docker-php-ext-install bcmath bz2 calendar gd mysqli opcache zip sockets \
+	    intl shmop sysvmsg memcached yaml sysvsem redis; \
 	\
 	runDeps="$( \
 		scanelf --needed --nobanner --format '%n#p' --recursive /usr/local/lib/php/extensions \
@@ -28,7 +34,8 @@ RUN set -ex; \
 	)"; \
 	apk add --virtual .wordpress-phpexts-rundeps $runDeps; \
 	apk del .build-deps; \
-	rm /tmp/memcached.tar.gz 
+	rm /tmp/memcached.tar.gz && \
+	    rm /tmp/redis.tar.gz
 
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php

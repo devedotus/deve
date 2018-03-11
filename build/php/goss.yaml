@@ -56,8 +56,8 @@ command:
     exit-status: 0
   php -m | grep -i mbstring:
     exit-status: 0
-  # php -m | grep -i mcrypt:
-  #   exit-status: 0
+  php -m | grep -i mcrypt:
+    exit-status: 0
   # Not common to all variants, test in supported children
   php -m | grep -i memcache:
     exit-status: 0
@@ -107,9 +107,6 @@ command:
     exit-status: 0
 
   # Test that extra extensions are disabled by default
-  php -m | grep newrelic:
-    exit-status: 1
-    stderr: ['!/./']
   php -m | grep redis:
     exit-status: 1
     stderr: ['!/./']
@@ -166,16 +163,6 @@ file:
       - '/^request_terminate_timeout = \${PHP_FPM_MAX_EXECUTION_TIME}/'
       - '/^rlimit_files = 40000/'
       - '/^rlimit_core = unlimited/'
-  /usr/local/etc/php/conf.d/docker-php-ext-newrelic.ini:
-    exists: true
-    contains:
-      - '/^;extension =/'
-      - '/^newrelic.appname = \"\${REPLACE_NEWRELIC_APP}\"/'
-      - '/^newrelic.license = \"\${REPLACE_NEWRELIC_LICENSE}\"/'
-      - '/^newrelic.logfile = \"\/dev\/stdout\"/'
-      - '/^newrelic.daemon.logfile = \"\/dev\/stdout\"/'
-      - '/^newrelic.loglevel = \"warning\"/'
-      - '/^newrelic.daemon.loglevel = \"warning\"/'
   /usr/local/etc/php-fpm.conf:
     exists: true
     contains:

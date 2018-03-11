@@ -17,11 +17,6 @@ user:
     - www-data
     shell: /bin/false
 mount:
-  /etc/nginx:
-    exists: true
-    opts:
-    - rw
-    - relatime
   /var/www:
     exists: true
     opts:

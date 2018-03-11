@@ -20,10 +20,13 @@ RUN set -ex; \
 	    mkdir -p /usr/src/php/ext/redis && \
 	    tar -C /usr/src/php/ext/redis -zxvf /tmp/redis.tar.gz --strip 1; \
     \
+    curl -L -o /tmp/igbinary.tar.gz "https://github.com/igbinary/igbinary/archive/2.0.5.tar.gz" && \
+	    mkdir -p /usr/src/php/ext/igbinary && \
+	    tar -C /usr/src/php/ext/igbinary -zxvf /tmp/igbinary.tar.gz --strip 1; \
 	docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
 	docker-php-ext-configure memcached; \
 	docker-php-ext-install bcmath bz2 calendar gd mysqli opcache zip sockets \
-	    intl shmop sysvmsg memcached sysvsem redis; \
+	    intl shmop sysvmsg memcached sysvsem redis igbinary; \
 	\
 	runDeps="$( \
 		scanelf --needed --nobanner --format '%n#p' --recursive /usr/local/lib/php/extensions \

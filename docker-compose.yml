@@ -2,59 +2,26 @@ version: '3.5'
 
 volumes:
   www:
-  dbd:
-  web:
-  php:
 
 services:
   web:
     build: build/nginx
     image: devedotus/deve:web
-    ports:
-      - '80:8080'
-      - '443:4433'
     volumes:
-      - web:/etc/nginx
-      - www:/var/www
+      - www:/var/www/wordpress
     restart: unless-stopped
 
   php:
-    build: build/php
-    image: devedotus/deve:php
+    image: wordpress:fpm-alpine
     depends_on:
       - mysql
     volumes:
-      - www:/var/www
+      - www:/var/www/wordpress
     restart: unless-stopped
+    environment:
+      WORDPRESS_DB_PASSWORD: ${MYSQL_ROOT_PASSWORD:-password}
 
   mysql:
-    build: build/mysql
-    image: devedotus/deve:mysql
-    volumes:
-      - dbd:/var/lib/mysql
+    image: yobasystems/alpine-mariadb:latest
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-
-  wp:
-    build: build/wp
-    image: devedotus/deve:cli
-    volumes:
-      - '/var/run/docker.sock:/var/run/docker.sock'
-      - ../cli:/var/cli
-      - www:/var/www
-      - web:/etc/nginx
-    depends_on:
-      - web
-      - php
-      - mysql
-    restart: "no"
-    command: "--help"
-    environment:
-      DEVE_DOMAIN: ${DEVE_DOMAIN}
-      DEVE_DATABASE: ${DEVE_DATABASE}
-      DEVE_DATABASE_PASSWORD: ${DEVE_DATABASE_PASSWORD}
-      DEVE_USER: ${DEVE_USER}
-      DEVE_PASSWORD: ${DEVE_PASSWORD}
-      DEVE_EMAIL: ${DEVE_EMAIL}
-      DEVE_TITLE: ${DEVE_TITLE}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-password}

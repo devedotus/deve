@@ -8,7 +8,7 @@ GITHUB_TAG = $(shell git tag | sort -n | tail -1)
 DOCKER_USER ?= tstachl
 DOCKER_ORG ?= devedotus
 DOCKER_REPO := deve
-DOCKER_TAG := web
+DOCKER_TAG := cli
 DOCKER_IMAGE := $(DOCKER_ORG)/$(DOCKER_REPO):$(DOCKER_TAG)
 
 .PHONY: all build test

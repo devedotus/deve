@@ -28,10 +28,14 @@ RUN set -ex; \
 	    mkdir -p /usr/src/php/ext/msgpack && \
 	    tar -C /usr/src/php/ext/msgpack -zxvf /tmp/msgpack.tar.gz --strip 1; \
     \
+    curl -L -o /tmp/apcu.tar.gz "https://github.com/krakjoe/apcu/archive/v5.1.11" && \
+	    mkdir -p /usr/src/php/ext/apcu && \
+	    tar -C /usr/src/php/ext/apcu -zxvf /tmp/apcu.tar.gz --strip 1; \
+    \
 	docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
 	docker-php-ext-configure memcached; \
 	docker-php-ext-install bcmath bz2 calendar gd mysqli opcache zip sockets \
-	    intl shmop sysvmsg memcached sysvsem redis igbinary exif msgpack; \
+	    intl shmop sysvmsg memcached sysvsem redis igbinary exif msgpack apcu; \
 	\
 	runDeps="$( \
 		scanelf --needed --nobanner --format '%n#p' --recursive /usr/local/lib/php/extensions \
@@ -44,7 +48,8 @@ RUN set -ex; \
 	rm /tmp/memcached.tar.gz && \
 	    rm /tmp/redis.tar.gz && \
 	    rm /tmp/igbinary.tar.gz && \
-	    rm /tmp/msgpack.tar.gz
+	    rm /tmp/msgpack.tar.gz && \
+	    rm /tmp/apcu.tar.gz
 
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php

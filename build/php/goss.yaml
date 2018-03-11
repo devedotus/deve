@@ -56,8 +56,6 @@ command:
     exit-status: 0
   php -m | grep -i mbstring:
     exit-status: 0
-  php -m | grep -i mcrypt:
-    exit-status: 0
   # Not common to all variants, test in supported children
   php -m | grep -i memcache:
     exit-status: 0

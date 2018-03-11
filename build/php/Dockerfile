@@ -16,7 +16,7 @@ RUN set -ex; \
 	    mkdir -p /usr/src/php/ext/memcached && \
 	    tar -C /usr/src/php/ext/memcached -zxvf /tmp/memcached.tar.gz --strip 1; \
 	\
-	curl -L -o /tmp/redis.tar.gz "https://github.com/phpredis/phpredis/archive/2.2.7.tar.gz" && \
+	curl -L -o /tmp/redis.tar.gz "https://github.com/phpredis/phpredis/archive/3.1.6.tar.gz" && \
 	    mkdir -p /usr/src/php/ext/redis && \
 	    tar -C /usr/src/php/ext/redis -zxvf /tmp/redis.tar.gz --strip 1; \
     \

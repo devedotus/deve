@@ -7,7 +7,7 @@ services:
   web:
     build: build/nginx
     image: devedotus/deve:web
-    port:
+    ports:
       - "80:80"
     volumes:
       - www:/var/www/html:ro

@@ -60,7 +60,7 @@ RUN { \
 		echo 'opcache.revalidate_freq=2'; \
 		echo 'opcache.fast_shutdown=1'; \
 		echo 'opcache.enable_cli=1'; \
-	} > /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
+	} > /usr/local/etc/php/conf.d/opcache.ini
 
 RUN { \
     echo 'post_max_size=13M'; \

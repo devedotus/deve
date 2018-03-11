@@ -26,7 +26,7 @@ RUN set -ex; \
 	docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
 	docker-php-ext-configure memcached; \
 	docker-php-ext-install bcmath bz2 calendar gd mysqli opcache zip sockets \
-	    intl shmop sysvmsg memcached sysvsem redis igbinary; \
+	    intl shmop sysvmsg memcached sysvsem redis igbinary exif; \
 	\
 	runDeps="$( \
 		scanelf --needed --nobanner --format '%n#p' --recursive /usr/local/lib/php/extensions \

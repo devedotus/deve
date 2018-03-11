@@ -149,53 +149,9 @@ command:
     stdout: [PHP 7.2]
     stderr: ['!/./']
 
-package:
-  php7.2:
-    installed: true
-  php7.2-cli:
-    installed: true
-  php7.2-curl:
-    installed: true
-  php7.2-fpm:
-    installed: true
-  php7.2-gd:
-    installed: true
-  php7.2-intl:
-    installed: true
-  php7.2-json:
-    installed: true
-  php7.2-mbstring:
-    installed: true
-  # php7.2-mcrypt:
-  #   installed: true
-  php7.2-mysql:
-    installed: true
-  php7.2-opcache:
-    installed: true
-  php7.2-pgsql:
-    installed: true
-  php7.2-readline:
-    installed: true
-  php7.2-xml:
-    installed: true
-  php7.2-zip:
-    installed: true
-  php-apcu:
-    installed: true
-  php-igbinary:
-    installed: true
-  php-memcache:
-    installed: true
-  php-memcached:
-    installed: true
-  php-msgpack:
-    installed: true
-  # php-xdebug:
-  #   installed: true
-
 file:
   # TODO: hopefully https://github.com/aelsabbahy/goss/issues/164 allows this to be a shared test using env variables
-  /etc/php/7.2/fpm/pool.d/www.conf:
+  /usr/local/etc/php-fpm.d/www.conf:
     exists: true
     contains:
       - '/^listen = 127.0.0.1:9000/'
@@ -214,7 +170,7 @@ file:
       - '/^request_terminate_timeout = \${PHP_FPM_MAX_EXECUTION_TIME}/'
       - '/^rlimit_files = 40000/'
       - '/^rlimit_core = unlimited/'
-  /etc/php/7.2/mods-available/newrelic.ini:
+  /usr/local/etc/mods-available/newrelic.ini:
     exists: true
     contains:
       - '/^;extension =/'
@@ -224,7 +180,7 @@ file:
       - '/^newrelic.daemon.logfile = \"\/dev\/stdout\"/'
       - '/^newrelic.loglevel = \"warning\"/'
       - '/^newrelic.daemon.loglevel = \"warning\"/'
-  /etc/php/7.2/fpm/php-fpm.conf:
+  /usr/local/etc/php-fpm.conf:
     exists: true
     contains:
       - '/^error_log = \/dev\/stdout/'
